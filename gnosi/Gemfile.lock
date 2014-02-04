@@ -38,6 +38,8 @@ GEM
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.1.4)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -47,6 +49,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.0.2)
     faraday (0.9.0)
@@ -92,8 +95,6 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    quiet_assets (1.0.2)
-      railties (>= 3.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -152,6 +153,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.1.2)
   better_errors
+  binding_of_caller
   coffee-rails (~> 4.0.0)
   feedly_api
   jbuilder (~> 1.2)
@@ -160,7 +162,6 @@ DEPENDENCIES
   oauth2
   omniauth-feedly!
   pry
-  quiet_assets
   rails (= 4.0.2)
   sass-rails (~> 4.0.0)
   sdoc

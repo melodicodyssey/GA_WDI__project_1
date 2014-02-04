@@ -8,21 +8,43 @@ class GnosisController < ApplicationController
 		# if user came back from feedly,
 		# 	create or sign in user using request.env["omniauth.auth"]
 		# else
-		# 	index page
-		# binding.pry
-		render 'index'
-	end
+		# 	render 'index'
 
-	def feed
-		id = params[:id]
-		@user = User.find_by_id(id)
-	end
+    
+    # uid = request.env['omniauth.auth']['uid']
+    # if !uid.nil?
+    #   user = User.find_by_uid(uid)
+    #     if user.nil?
+    #       new_user = User.create(feedly_params)
+    #       sign_in new_user
+    #     else
+    #       user_token_update = user.update_attributes(token: request.env['omniauth.auth']['token'])
+    #       sign_in user_token_update
+    #     end
 
-	def history
-		id = params[:id]
-		@user = User.find_by_id(id)
-		@links = Link.where(user_id: @user.id)
-	end
+    binding.pry
+    render 'index'
+    else
+      redirect_to '/auth/feedly'
+    end 
+  end
+
+  def feed
+    id = params[:id]
+    @user = User.find_by_id(id)
+  end
+
+  def history
+    id = params[:id]
+    @user = User.find_by_id(id)
+    @links = Link.where(user_id: @user.id)
+  end
+
+  private
+    def feedly_params
+      feedly_params = {uid: request.env['omniauth.auth']['id'], family_name: request.env['omniauth.auth']['familyName'], given_name: request.env['omniauth.auth']['givenName'], email: request.env['omniauth.auth']['email'], auth_token: request.env['omniauth.auth']['token'], refresh_token: request.env['omniauth.auth']['refresh_token']}
+      return feedly_params
+    end
 end
 
 # get some functionality working, send the dev screenshots

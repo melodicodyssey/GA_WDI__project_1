@@ -27,5 +27,5 @@ Gnosi::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  #config force ssl - make your site https
+  #config.force ssl - make your site https
 end

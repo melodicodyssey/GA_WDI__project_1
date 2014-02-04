@@ -10,7 +10,8 @@ class GnosisController < ApplicationController
 		# else
 		# 	render 'index'
 
-    
+# request.env['omniauth.auth']['extra']['raw_info']
+
     # uid = request.env['omniauth.auth']['uid']
     # if !uid.nil?
     #   user = User.find_by_uid(uid)
@@ -21,12 +22,12 @@ class GnosisController < ApplicationController
     #       user_token_update = user.update_attributes(token: request.env['omniauth.auth']['token'])
     #       sign_in user_token_update
     #     end
-
+    @user = request.env['omniauth.auth']['extra']['raw_info']
     binding.pry
     render 'index'
-    else
-      redirect_to '/auth/feedly'
-    end 
+    # else
+    #   redirect_to '/auth/feedly'
+    # end 
   end
 
   def feed
@@ -42,7 +43,15 @@ class GnosisController < ApplicationController
 
   private
     def feedly_params
-      feedly_params = {uid: request.env['omniauth.auth']['id'], family_name: request.env['omniauth.auth']['familyName'], given_name: request.env['omniauth.auth']['givenName'], email: request.env['omniauth.auth']['email'], auth_token: request.env['omniauth.auth']['token'], refresh_token: request.env['omniauth.auth']['refresh_token']}
+      feedly_params = {
+        uid: request.env['omniauth.auth']['uid'],
+        family_name: request.env['omniauth.auth']['extra']['raw_info']['familyName'],
+        given_name: request.env['omniauth.auth']['extra']['raw_info']['givenName'],
+        email: request.env['omniauth.auth']['extra']['raw_info']['email'],
+        picture: request.env['omniauth.auth']['extra']['raw_info']['picture'],
+        auth_token: request.env['omniauth.auth']['token'],
+        refresh_token: request.env['omniauth.auth']['refresh_token']
+      }
       return feedly_params
     end
 end

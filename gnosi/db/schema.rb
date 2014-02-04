@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20140204023936) do
     t.string   "family_name"
     t.string   "given_name"
     t.string   "email"
+    t.string   "picture"
     t.string   "auth_token"
     t.string   "refresh_token"
     t.datetime "created_at"

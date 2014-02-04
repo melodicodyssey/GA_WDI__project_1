@@ -25,6 +25,7 @@ class SessionsController < ApplicationController
 	redirect_to index_path
   end
 
-  def auth = request.env['omniauth.auth']
+  auth = request.env['omniauth.auth']
+
 
 end

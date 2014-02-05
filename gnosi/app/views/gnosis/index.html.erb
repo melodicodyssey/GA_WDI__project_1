@@ -1,6 +1,6 @@
 <h1>Welcome to Gnosi!</h1>
-
-<%= link_to "Sign in to Feedly", "/auth/feedly" %>
+<p style="color: red"><%= flash[:no_auth] %></p>
+<%= link_to "Sign in to Feedly", "auth/feedly" %>
 
 <%= button_to "Sign Up", new_user_path, method: 'get' %>
 <%= button_to "Sign In", new_session_path, method: 'get' %>

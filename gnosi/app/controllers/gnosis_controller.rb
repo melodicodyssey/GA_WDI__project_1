@@ -11,24 +11,31 @@ class GnosisController < ApplicationController
 		# 	render 'index'
 
 # request.env['omniauth.auth']['extra']['raw_info']
-
-    # uid = request.env['omniauth.auth']['uid']
-    # if !uid.nil?
-    #   user = User.find_by_uid(uid)
-    #     if user.nil?
-    #       new_user = User.create(feedly_params)
-    #       sign_in new_user
-    #     else
-    #       user_token_update = user.update_attributes(token: request.env['omniauth.auth']['token'])
-    #       sign_in user_token_update
-    #     end
-    @user = request.env['omniauth.auth']['extra']['raw_info']
+  unless request.env['omniauth.auth'].nil?
+    uid = request.env['omniauth.auth']['uid']
+    @user = User.new()
+    if !uid.nil?
+      user = User.find_by_uid(uid)
+        if user.nil?
+          @user = User.create_new(@user)
+        else
+          @user = User.update_token(@user)
+        end
+          sign_in @user
+          flash[:success] = "You have successfully logged in to Feedly!"
+          render 'index'
+    end
+  end
     binding.pry
     render 'index'
-    # else
-    #   redirect_to '/auth/feedly'
-    # end 
   end
+
+  def auth_failure
+    flash[:no_auth] = "Feedly authentication failed"
+    redirect_to index_path
+  end
+
+
 
   def feed
     id = params[:id]
@@ -41,19 +48,6 @@ class GnosisController < ApplicationController
     @links = Link.where(user_id: @user.id)
   end
 
-  private
-    def feedly_params
-      feedly_params = {
-        uid: request.env['omniauth.auth']['uid'],
-        family_name: request.env['omniauth.auth']['extra']['raw_info']['familyName'],
-        given_name: request.env['omniauth.auth']['extra']['raw_info']['givenName'],
-        email: request.env['omniauth.auth']['extra']['raw_info']['email'],
-        picture: request.env['omniauth.auth']['extra']['raw_info']['picture'],
-        auth_token: request.env['omniauth.auth']['token'],
-        refresh_token: request.env['omniauth.auth']['refresh_token']
-      }
-      return feedly_params
-    end
 end
 
 # get some functionality working, send the dev screenshots

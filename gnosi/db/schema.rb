@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140204023936) do
     t.string   "picture"
     t.string   "auth_token"
     t.string   "refresh_token"
+    t.string   "remember_me_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
